@@ -2,7 +2,7 @@ body{
   font: 15px/1.5 Arial, Helvetica,sans-serif;
   padding:0;
   margin:0;
-  background-color:#c60b0b;
+  background-color:#99bfc1;
 }
 
 /* Global */
@@ -82,9 +82,9 @@ header a:hover{
 /* Showcase */
 #showcase{
   min-height:400px;
-  background:url('../img/showcase.jpg') no-repeat 0 -400px;
+  background:url('../img/idk.jpg') no-repeat 0 -400px;
   text-align:center;
-  color:#ffffff;
+  color:#000000;
 }
 
 #showcase h1{
