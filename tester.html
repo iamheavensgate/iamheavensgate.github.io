@@ -6,11 +6,10 @@
 </head>
 <body>
 <script type="text/processing">
-
-  PImage ./img/backImg;
-  PImage ./img/birdImg;
-  PImage ./img/wallImg;
- 
+ PImage backImg;
+  PImage birdImg;
+  PImage wallImg;
+  //scores
 int  gamestate = 0;
 int score = 0;
 int highscore = 0;
@@ -21,7 +20,7 @@ void setup() {
   size(600,750);
   fill(0);
   textSize(40);
-
+  // images
    backImg = loadImage("./img/flappy.png");
    birdImg = loadImage("./img/bird.png");
    wallImg = loadImage("./img/pipe.png");
@@ -37,7 +36,7 @@ void draw() {
     y += vy;
     if(x == -600) x = 0;
     for(int i = 0 ; i < 2; i++){
-     
+      // pipes
       imageMode(CENTER);
       image(wallImg,wx[i], wy[i] - (wallImg.height/2+100));
       image(wallImg, wx[i], wy[i] + (wallImg.height/2+150));
@@ -55,13 +54,13 @@ void draw() {
       }
       wx[i] -= 6;
     }
-   
+    //scores
     text("current: "+score, width/2-20,700);
     text("highscore: "+highscore, width/2-20, 600);
     
   }
 }
-
+//flapping , movements
 void mousePressed() {
   vy = -17;
   if(gamestate==1){
@@ -77,5 +76,6 @@ void mousePressed() {
 }
 
 </script>
+<canvas id="sketch" style="border: 1px solid black;"></canvas>
 </body>
 </html>
