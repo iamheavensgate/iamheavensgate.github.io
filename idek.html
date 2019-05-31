@@ -6,43 +6,47 @@
 </head>
 <body>
 <script type="text/processing">
-
-/**
-  *@michael leong
-  *@verion 1.0 date may 2nd
-  */
-  //images
-  PImage backImg;
+ PImage backImg;
   PImage birdImg;
   PImage wallImg;
-  //scores
+//changes gamestates 
 int  gamestate = 0;
+//scores
 int score = 0;
 int highscore = 0;
+//start
 int x= -200, y, vy = 0;
 int[] wx = new int[2];
 int[] wy = new int[2];
+
 void setup() {
+  //text,size
   size(600,750);
   fill(0);
   textSize(40);
   // images
    backImg = loadImage("flappy.png");
    birdImg = loadImage("bird.png");
-   wallImg = loadImage("pipe.png");
+   wallImg = loadImage("bullet.png");
 }
+
 void draw() {
+  // first gamestate
   if(gamestate == 0){
-    imageMode(CORNER);
+    //produces bullets
+ imageMode(CORNER);
+ //loads imiges
     image(backImg, x, 0);
     image(backImg, x+backImg.width, 0);
     image(birdImg, width/2, y);
+    // speed player falls
     x -= 6;
     vy += 1;
     y += vy;
+    //deaths
     if(x == -600) x = 0;
-    for(int i = 0 ; i < 2; i++){
-      // pipes
+    for(int i = 0; i < 1; i++){
+      //spawns bullets
       imageMode(CENTER);
       image(wallImg,wx[i], wy[i] - (wallImg.height/2+100));
       image(wallImg, wx[i], wy[i] + (wallImg.height/2+150));
@@ -50,23 +54,31 @@ void draw() {
       wy[i] =  (int)random(200,height-200);
       wx[i] = width;
       }
+      //scores on screen
       if(wx[i] == width/2){
         score++;
         highscore = max(score, highscore);
       }
-      if( y > height || y < 0 || (abs(width/2-wx[i])<25 && abs(y-wy[i])>100)) {
+      // deaths
+      if( y > height || y < 0 || /*(abs(width/2-wx[i])<25 && */abs(y-wy[i])>100) {
         gamestate = 1;
         score = 0;
       }
+      // second gamestate, shows my restart screen
+       if(gamestate == 1){
+         background(0);
+         makeButton();
+}
       wx[i] -= 6;
     }
-    //scores
+    //scores text to screen
     text("current: "+score, width/2-20,700);
     text("highscore: "+highscore, width/2-20, 600);
     
   }
 }
-//flapping , movements
+
+// movement
 void mousePressed() {
   vy = -17;
   if(gamestate==1){
@@ -79,6 +91,27 @@ void mousePressed() {
     gamestate = 0;
     
 }
+}
+
+//button
+void makeButton(){ 
+fill(255);
+// hover over button
+if(mouseX > 200 && mouseX < 400 && mouseY > 200 && mouseY < 250){
+fill(120); 
+}
+// elipse of button
+rect(100,200, 300, 50, 15); 
+fill(255,0,0);
+textSize(35);
+if(mouseX > 200 && mouseX < 400 && mouseY > 200 && mouseY < 250){
+fill(0,0,255); //Change to BLUE IF Mouse X and MouseY are in RECT
+if(mousePressed){
+  textSize(41);
+  gamestate = 0;
+}
+}
+text("restart?", 190, 240);
 }
 
 </script>
